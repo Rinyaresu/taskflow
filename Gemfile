@@ -70,3 +70,5 @@ gem 'rubocop', '~> 1.60'
 gem 'solargraph', '~> 0.50.0'
 
 gem 'rubocop-rails', '~> 2.23'
+
+gem "devise", "~> 4.9"
