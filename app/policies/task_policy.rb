@@ -6,6 +6,10 @@ class TaskPolicy < ApplicationPolicy
     @task = task
   end
 
+  def create?
+    user.admin? || user.project_manager? || user
+  end
+
   def update?
     user.admin? || user.project_manager? || task.user == user
   end
