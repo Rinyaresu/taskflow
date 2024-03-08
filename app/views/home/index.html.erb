@@ -1,10 +1,22 @@
-<div class="container mx-auto mt-28 flex flex-wrap content-between justify-between">
-  <div>
-    <h1 class="font-bold text-4xl">Home#index</h1>
-    <p>Find me in app/views/home/index.html.erb</p>
+<div class="container mx-auto flex flex-wrap content-between justify-between">
+  <div class=" text-gray-900 dark:text-gray-100">
+    <div class="flex space-x-96">
+      <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl lg:text-6xl">TaskFlow</h1>
+    </div>
+    <% if notice.present? %>
+      <p class="py-2 px-3 bg-green-50 dark:bg-zinc-800 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+    <% end %>
+    <% @projects.each do |project| %>
+      <div class="mt-4">
+        <%= link_to project.name, project_path(project), class: "text-2xl font-bold hover:text-blue-400" %>
+      </div>
+    <% end %>
   </div>
   <div class='mt-5'>
     <% if current_user %>
+      <% if current_user.admin? || current_user.project_manager? %>
+        <%= link_to 'New project', new_project_path, class: "text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" %>
+      <% end %>
       <%= link_to "Log Out!", destroy_user_session_path, class: "text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" %>
     <% else %>
       <%= link_to "Sign Up!", new_user_registration_path, class: "text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 " %>
