@@ -1,11 +1,10 @@
-<%= form_with(model: task, class: "contents") do |form| %>
-  <% if task.errors.any? %>
+<%= form_with(model: @task, url: @task.persisted? ? project_task_path(@project, @task) : project_tasks_path(@project), local: true, class: "contents") do |form| %>
+  <% if @task.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-      <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
-
+      <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
       <ul>
-        <% task.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% @task.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
         <% end %>
       </ul>
     </div>
@@ -22,8 +21,7 @@
   </div>
 
   <div class="my-5">
-    <%= form.label :project_id %>
-    <%= form.text_field :project_id, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+    <%= form.hidden_field :project_id, value: params[:project_id] || @task.project_id %>
   </div>
 
   <div class="my-5">
@@ -32,6 +30,6 @@
   </div>
 
   <div class="inline">
-    <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+    <%= form.submit @task.persisted? ? 'Update Task' : 'Create Task', class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
   </div>
 <% end %>
